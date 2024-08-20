@@ -7,17 +7,12 @@ variable "iam_user_name" {
   default = "s3-access-role"
 }
 
-variable "iam_policy_name" {
-  type    = string
-  default = "s3-access-policy"
-}
-
 resource "aws_iam_user" "user" {
   name = var.iam_user_name
 }
 
 resource "aws_iam_user_policy" "policy" {
-  name   = var.iam_policy_name
+  name   = aws_iam_user.user.name
   user   = aws_iam_user.user.name
   policy = jsonencode(var.iam_policy)
 }
